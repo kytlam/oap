@@ -57,7 +57,7 @@ $result=getscheduleByDate($q);
                     echo "<td>" . date("h:i", strtotime($row['startTime'])) . "</td>";
                     echo "<td>" . date("h:i", strtotime($row['endTime'])) . "</td>";
                     echo "<td> <span class='label label-".$avail."'>". ($row['isAvailable'] ? "YES" : "NO") ."</span></td>";
-                    echo "<td><a href='appointment.php?&appid=" . $row['scheduleId'] . "&scheduleDate=".$q."' class='btn btn-".$btnclick." btn-xs' role='button' ".$btnstate.">Book Now</a></td>";
+                    echo "<td><a href='appointment.php?&schId=" . $row['scheduleId'] . "&scheduleDate=".$q."' class='btn btn-".$btnclick." btn-xs' role='button' ".$btnstate.">Book Now</a></td>";
                     // echo "<td><a href='appointment.php?&appid=" . $row['scheduleId'] . "&scheduleDate=".$q."'>Book</a></td>";
                     // <td><button type='button' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#exampleModal'>Book Now</button></td>";
                     //triggered when modal is about to be shown

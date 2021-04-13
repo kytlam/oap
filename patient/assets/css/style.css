@@ -39,3 +39,6 @@
 .panel-info > .panel-heading{
     background-color: #2196F3 !important;
 }
+.radio-group {
+    margin: 0;
+}

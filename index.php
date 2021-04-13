@@ -34,37 +34,24 @@ if (isset($_POST['login']))
 <!-- register -->
 <?php
 if (isset($_POST['signup'])) {
-$patientFirstName = mysqli_real_escape_string($db_conn,$_POST['patientFirstName']);
-$patientLastName  = mysqli_real_escape_string($db_conn,$_POST['patientLastName']);
-$patientEmail     = mysqli_real_escape_string($db_conn,$_POST['patientEmail']);
-$icPatient     = mysqli_real_escape_string($db_conn,$_POST['icPatient']);
-$password         = mysqli_real_escape_string($db_conn,$_POST['password']);
-$month            = mysqli_real_escape_string($db_conn,$_POST['month']);
-$day              = mysqli_real_escape_string($db_conn,$_POST['day']);
-$year             = mysqli_real_escape_string($db_conn,$_POST['year']);
-$patientDOB       = $year . "-" . $month . "-" . $day;
-$patientGender = mysqli_real_escape_string($db_conn,$_POST['patientGender']);
-//INSERT
-$query = " INSERT INTO patient (  icPatient, password, patientFirstName, patientLastName,  patientDOB, patientGender,   patientEmail )
-VALUES ( '$icPatient', '$password', '$patientFirstName', '$patientLastName', '$patientDOB', '$patientGender', '$patientEmail' ) ";
-$result = mysqli_query($db_conn, $query);
-// echo $result;
-if( $result )
-{
+    $post_data = $_POST;
+    unset($_POST);
+
+    $result = register($post_data) ;
+    if( $result == "done" )
+    {
 ?>
-<script type="text/javascript">
-alert('Register success. Please Login to make an appointment.');
-</script>
+    <script type="text/javascript">
+        alert('Register success. Please Login to make an appointment.');
+    </script>
 <?php
-}
-else
-{
+    } else {
 ?>
-<script type="text/javascript">
-alert('User already registered. Please try again');
-</script>
+    <script type="text/javascript">
+        alert('<?= $result ?>');
+    </script>
 <?php
-}
+    }
 
 }
 ?>
@@ -91,63 +78,8 @@ alert('User already registered. Please try again');
         <link href="assets/css/material.css" rel="stylesheet">
     </head>
     <body>
-        <!-- navigation -->
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.php"><img alt="Brand" src="assets/img/logo.png" height="40px"></a>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    
-                    
-                    <ul class="nav navbar-nav navbar-right">
-                        
-
-                        <!-- <li><a href="adminlogin.php">Admin</a></li> -->
-                        <li><a href="#" data-toggle="modal" data-target="#myModal">Sign Up</a></li>
-                   
-                        <li>
-                            <p class="navbar-text">Already have an account?</p>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
-                            <ul id="login-dp" class="dropdown-menu">
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            
-                                            <form class="form" role="form" method="POST" accept-charset="UTF-8" >
-                                                <div class="form-group">
-                                                    <label class="sr-only" for="username">Email</label>
-                                                    <input type="text" class="form-control" name="username" placeholder="User Name" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="sr-only" for="password">Password</label>
-                                                    <input type="password" class="form-control" name="password" placeholder="Password" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <button type="submit" name="login" id="login" class="btn btn-primary btn-block">Sign in</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- navigation -->
-
+        
+        <?php include_once 'shared/navbar.php'; ?>
         <!-- modal container start -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -169,123 +101,39 @@ alert('User already registered. Please try again');
                                         <h4>It's free and always will be.</h4>
                                         <div class="row">
                                             <div class="col-xs-6 col-md-6">
-                                                <input type="text" name="patientFirstName" value="" class="form-control input-lg" placeholder="First Name" required />
+                                                <input type="text" name="patientFirstName" maxlength="50" value="" class="form-control input-lg" placeholder="First Name" required />
                                             </div>
                                             <div class="col-xs-6 col-md-6">
-                                                <input type="text" name="patientLastName" value="" class="form-control input-lg" placeholder="Last Name" required />
+                                                <input type="text" name="patientLastName" maxlength="50" value="" class="form-control input-lg" placeholder="Last Name" required />
                                             </div>
                                         </div>
                                         
-                                        <input type="text" name="patientEmail" value="" class="form-control input-lg" placeholder="Your Email"  required/>
-                                        <input type="number" name="icPatient" value="" class="form-control input-lg" placeholder="Your IC Number"  required/>
+                                        
+                                        <input type="email" name="patientEmail" maxlength="255" 
+                                        pattent="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+                                        value="" class="form-control input-lg" placeholder="Your Email"  required/>
+                                        <input type="text" name="username" maxlength="50" value="" class="form-control input-lg" placeholder="Your username"  required/>
                                         
                                         
-                                        <input type="password" name="password" value="" class="form-control input-lg" placeholder="Password"  required/>
+                                        <input type="password" name="password" value="" maxlength="50" class="form-control input-lg" placeholder="Password"  required/>
                                         
-                                        <input type="password" name="confirm_password" value="" class="form-control input-lg" placeholder="Confirm Password"  required/>
+                                        <input type="password" name="confirm_password" maxlength="50" value="" class="form-control input-lg" placeholder="Confirm Password"  required/>
                                         <label>Birth Date</label>
-                                        <div class="row">
-                                            
-                                            <div class="col-xs-4 col-md-4">
-                                                <select name="month" class = "form-control input-lg" required>
-                                                    <option value="">Month</option>
-                                                    <option value="01">Jan</option>
-                                                    <option value="02">Feb</option>
-                                                    <option value="03">Mar</option>
-                                                    <option value="04">Apr</option>
-                                                    <option value="05">May</option>
-                                                    <option value="06">Jun</option>
-                                                    <option value="07">Jul</option>
-                                                    <option value="08">Aug</option>
-                                                    <option value="09">Sep</option>
-                                                    <option value="10">Oct</option>
-                                                    <option value="11">Nov</option>
-                                                    <option value="12">Dec</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-4 col-md-4">
-                                                <select name="day" class = "form-control input-lg" required>
-                                                    <option value="">Day</option>
-                                                    <option value="01">1</option>
-                                                    <option value="02">2</option>
-                                                    <option value="03">3</option>
-                                                    <option value="04">4</option>
-                                                    <option value="05">5</option>
-                                                    <option value="06">6</option>
-                                                    <option value="07">7</option>
-                                                    <option value="08">8</option>
-                                                    <option value="09">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                    <option value="13">13</option>
-                                                    <option value="14">14</option>
-                                                    <option value="15">15</option>
-                                                    <option value="16">16</option>
-                                                    <option value="17">17</option>
-                                                    <option value="18">18</option>
-                                                    <option value="19">19</option>
-                                                    <option value="20">20</option>
-                                                    <option value="21">21</option>
-                                                    <option value="22">22</option>
-                                                    <option value="23">23</option>
-                                                    <option value="24">24</option>
-                                                    <option value="25">25</option>
-                                                    <option value="26">26</option>
-                                                    <option value="27">27</option>
-                                                    <option value="28">28</option>
-                                                    <option value="29">29</option>
-                                                    <option value="30">30</option>
-                                                    <option value="31">31</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-4 col-md-4">
-                                                <select name="year" class = "form-control input-lg" required>
-                                                    <option value="">Year</option>
-                                                    
-                                                    <option value="1981">1981</option>
-                                                    <option value="1982">1982</option>
-                                                    <option value="1983">1983</option>
-                                                    <option value="1984">1984</option>
-                                                    <option value="1985">1985</option>
-                                                    <option value="1986">1986</option>
-                                                    <option value="1987">1987</option>
-                                                    <option value="1988">1988</option>
-                                                    <option value="1989">1989</option>
-                                                    <option value="1990">1990</option>
-                                                    <option value="1991">1991</option>
-                                                    <option value="1992">1992</option>
-                                                    <option value="1993">1993</option>
-                                                    <option value="1994">1994</option>
-                                                    <option value="1995">1995</option>
-                                                    <option value="1996">1996</option>
-                                                    <option value="1997">1997</option>
-                                                    <option value="1998">1998</option>
-                                                    <option value="1999">1999</option>
-                                                    <option value="2000">2000</option>
-                                                    <option value="2001">2001</option>
-                                                    <option value="2002">2002</option>
-                                                    <option value="2003">2003</option>
-                                                    <option value="2004">2004</option>
-                                                    <option value="2005">2005</option>
-                                                    <option value="2006">2006</option>
-                                                    <option value="2007">2007</option>
-                                                    <option value="2008">2008</option>
-                                                    <option value="2009">2009</option>
-                                                    <option value="2010">2010</option>
-                                                    <option value="2011">2011</option>
-                                                    <option value="2012">2012</option>
-                                                    <option value="2013">2013</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        <input type="text" name="regDOB" value="" class="form-control input-lg" placeholder="yyyy-mm-dd"  required/>
                                         <label>Gender : </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="patientGender" value="male" required/>Male
-                                        </label>
-                                        <label class="radio-inline" >
-                                            <input type="radio" name="patientGender" value="female" required/>Female
-                                        </label>
+                                        <div class="radio-group">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="patientGender" value="na" required checked />N/A
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="patientGender" value="male" required/>Male
+                                            </label>
+                                            <label class="radio-inline" >
+                                                <input type="radio" name="patientGender" value="female" required/>Female
+                                            </label>
+                                        </div><label>Address : </label>
+                                        <textarea name="patientAddress" rows="4" cols="50"></textarea>
+                                        <input type="tel" name="patientPhone" maxlength="50" value="" class="form-control input-lg" placeholder="Phone Number"  required/>
                                         <br />
                                         <span class="help-block">By clicking Create my account, you agree to our Terms and that you have read our Data Use Policy, including our Cookie Use.</span>
                                         
@@ -479,8 +327,13 @@ alert('User already registered. Please try again');
             container: container,
             todayHighlight: true,
             autoclose: true,
-        })
-
+        });
+        $('input[name="regDOB"]').datepicker({
+            format: 'yyyy-mm-dd',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        });
     })
 
 </script>

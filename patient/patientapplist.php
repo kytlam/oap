@@ -105,25 +105,16 @@ echo "<th>endTime </th>";
 echo "<th>Print </th>";
 echo "</tr>";
 echo "</thead>";
-// $res = mysqli_query($con, "SELECT a.*, b.*,c.*
-// 		FROM patient a
-// 		JOIN appointment b
-// 		On a.icPatient = b.icPatient
-// 		JOIN doctorschedule c
-// 		On b.scheduleId=c.scheduleId
-// 		WHERE b.icPatient ='$session'");
-
-// if (!$res) {
-// die("Error running $sql: " . mysqli_error());
-// }
 echo "<tbody>";
 if($appsch!=null && count($appsch)>0) {
+	$days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday','Thursday','Friday', 'Saturday');
+	
 	foreach ($appsch as $value) {
 		echo "<tr>";
 		echo "<td>" . $value['appId'] . "</td>";
 		echo "<td>" . $value['icPatient'] . "</td>";
 		echo "<td>" . $value['patientLastName'] . "</td>";
-		// echo "<td>" . $value['scheduleDay'] . "</td>";
+		echo "<td>" . $days[date('w', strtotime($value['scheduleDate']))] . "</td>";
 		echo "<td>" . $value['scheduleDate'] . "</td>";
 		echo "<td>" . $value['startTime'] . "</td>";
 		echo "<td>" . $value['endTime'] . "</td>";

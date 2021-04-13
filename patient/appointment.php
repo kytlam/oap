@@ -1,41 +1,40 @@
 <?php
 session_start();
-include_once '../assets/conn/dbconnect.php';
-$session= $_SESSION['patientSession'];
-// $appid=null;
-// $appdate=null;
-if (isset($_GET['scheduleDate']) && isset($_GET['appid'])) {
-	$appdate =$_GET['scheduleDate'];
-	$appid = $_GET['appid'];
+include_once dirname(dirname(__FILE__)).'/dal/patient.php';
+include_once dirname(dirname(__FILE__)).'/dal/schedule.php';
+include_once dirname(dirname(__FILE__)).'/dal/appointment.php';
+
+$usersession = $_SESSION['patientSession'];
+$userRow=getPatient($usersession);
+if(($userRow==NULL)){
+    header("Location: ../index.php");
 }
-// on b.icPatient = a.icPatient
-$res = mysqli_query($con,"SELECT a.*, b.* FROM doctorschedule a INNER JOIN patient b
-WHERE a.scheduleDate='$appdate' AND scheduleId=$appid AND b.icPatient=$session");
-$userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
+$days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday','Thursday','Friday', 'Saturday');
+$schedule =null;
+if (isset($_GET['scheduleDate']) && isset($_GET['schId'])) {
+	$scheduleDate =$_GET['scheduleDate'];
+	$schId = $_GET['schId'];
+	$schedule =getSchedule($schId,$scheduleDate,  true );
+}
 
-
-	
 //INSERT
 if (isset($_POST['appointment'])) {
-$icPatient = mysqli_real_escape_string($con,$userRow['icPatient']);
-$scheduleid = mysqli_real_escape_string($con,$appid);
-$symptom = mysqli_real_escape_string($con,$_POST['symptom']);
-$comment = mysqli_real_escape_string($con,$_POST['comment']);
-$avail = "notavail";
+	$post_data=$_POST;
+	unset($_POST);
+	$result = makeAppointment($post_data);
+
+// $query = "INSERT INTO appointment (  icPatient , scheduleId , appSymptom , appComment  )
+// VALUES ( '$icPatient', '$scheduleid', '$symptom', '$comment') ";
+
+// //update table appointment schedule
+// $sql = "UPDATE doctorschedule SET bookAvail = '$avail' WHERE scheduleId = $scheduleid" ;
+// $scheduleres=mysqli_query($con,$sql);
+// if ($scheduleres) {
+// 	$btn= "disable";
+// } 
 
 
-$query = "INSERT INTO appointment (  icPatient , scheduleId , appSymptom , appComment  )
-VALUES ( '$icPatient', '$scheduleid', '$symptom', '$comment') ";
-
-//update table appointment schedule
-$sql = "UPDATE doctorschedule SET bookAvail = '$avail' WHERE scheduleId = $scheduleid" ;
-$scheduleres=mysqli_query($con,$sql);
-if ($scheduleres) {
-	$btn= "disable";
-} 
-
-
-$result = mysqli_query($con,$query);
+// $result = mysqli_query($con,$query);
 // echo $result;
 if( $result )
 {
@@ -54,7 +53,7 @@ else
 alert('Appointment booking fail. Please try again.');
 </script>
 <?php
-header("Location: patient/patient.php");
+// header("Location: patient/patient.php");
 }
 //dapat dari generator end
 }
@@ -152,10 +151,14 @@ header("Location: patient/patient.php");
 										
 										
 										<form class="form" role="form" method="POST" accept-charset="UTF-8">
+										<input type="hidden" name="icPatient" value="<?= $userRow['icPatient'] ?>" />
+										<input type="hidden" name="scheduleid" value="<?= $schedule['scheduleId'] ?>" />
+										<input type="hidden" name="status" value="scheduled" />
 											<div class="panel panel-default">
 												<div class="panel-heading">Patient Information</div>
 												<div class="panel-body">
-													
+													<?php 
+													?>
 													Patient Name: <?php echo $userRow['patientFirstName'] ?> <?php echo $userRow['patientLastName'] ?><br>
 													Patient IC: <?php echo $userRow['icPatient'] ?><br>
 													Contact Number: <?php echo $userRow['patientPhone'] ?><br>
@@ -165,9 +168,10 @@ header("Location: patient/patient.php");
 											<div class="panel panel-default">
 												<div class="panel-heading">Appointment Information</div>
 												<div class="panel-body">
-													Day: <?php echo $userRow['scheduleDay'] ?><br>
-													Date: <?php echo $userRow['scheduleDate'] ?><br>
-													Time: <?php echo $userRow['startTime'] ?> - <?php echo $userRow['endTime'] ?><br>
+													Date: <?php echo $schedule['scheduleDate'] ?><br>
+													Day: <?php echo $days[date('w', strtotime($schedule['scheduleDate']))]  ?><br>
+													Time: <?php echo $schedule['startTime'] ?> - <?php echo $schedule['endTime'] ?><br>
+													
 												</div>
 											</div>
 											

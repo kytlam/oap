@@ -1,16 +1,7 @@
 <?php
-include_once '../assets/conn/dbconnect.php';
-// Get the variables.
-$icPatient = $_POST['ic'];
-// echo $appid;
+include_once dirname(dirname(__FILE__)).'/dal/patient.php';
 
-$delete = mysqli_query($con,"DELETE FROM patient WHERE icPatient=$icPatient");
-// if(isset($delete)) {
-//    echo "YES";
-// } else {
-//    echo "NO";
-// }
-
+echo deletePatient($_POST['ic']);
 
 
 ?>

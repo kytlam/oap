@@ -34,7 +34,7 @@ CREATE TABLE `appointment` (
   `scheduleId` bigint NOT NULL,
   `appSymptom` varchar(100) NOT NULL,
   `appComment` varchar(100) NOT NULL,
-  `status` ENUM('scheduled', 'process', 'done'),
+  `status` ENUM('scheduled', 'done'),
   `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`appId`),

@@ -1,9 +1,26 @@
 <?php
 include_once dirname(dirname(__FILE__)).'/dal/dbconnect.php';
 
-function getSchedule($scheduleId) {
+function getSchedule($scheduleId, $date = null, $isAval=null) {
     global $db_conn;
-    $res=mysqli_query($db_conn,  "SELECT * FROM doctorschedule WHERE scheduleId = $scheduleId  AND deletedAt IS NULL LIMIT 1");
+
+    
+    $condition = [];
+    if(!is_null($date)) {
+        array_push($condition," scheduleDate = '$date'");
+    }
+    if(!is_null($isAval) && is_bool($isAval)) {
+        array_push($condition," isAvailable = $isAval");
+    }
+    $condition_str="";
+    if(count($condition) > 0) {
+        $condition_str=implode(" AND ", $condition);
+        $condition_str=" AND $condition_str";
+    }
+
+    $query = "SELECT * FROM doctorschedule WHERE scheduleId = $scheduleId AND deletedAt IS NULL 
+        $condition_str LIMIT 1";
+    $res=mysqli_query($db_conn,  $query );
     if($res === false) {
         return NULL;
     }

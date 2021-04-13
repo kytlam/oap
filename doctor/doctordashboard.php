@@ -85,16 +85,17 @@ if(($userRow==NULL)){
                             
                             <?php 
                             $res_list = getappointmentScheduleList('d', $usersession);
-                            while ($appointment=$res_list) {
-                                if ($appointment['status']=='process') {
+                            $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday','Thursday','Friday', 'Saturday');
+	                        foreach ($res_list as $appointment) {
+                                if ($appointment['status']=='scheduled') {
                                     $status="danger";
-                                    $icon='remove';
+                                    $icon='clock-o';
                                     $checked='';
 
                                 } else {
                                     $status="success";
-                                    $icon='ok';
-                                    $checked = 'disabled';
+                                    $icon='check';
+                                    $checked = 'disabled checked="checked"';
                                 }
                                 echo "<tbody>";
                                 echo "<tr class='$status'>";
@@ -102,14 +103,13 @@ if(($userRow==NULL)){
                                     echo "<td>" . $appointment['patientLastName'] . "</td>";
                                     echo "<td>" . $appointment['patientPhone'] . "</td>";
                                     echo "<td>" . $appointment['patientEmail'] . "</td>";
-                                    echo "<td>" . $appointment['scheduleDay'] . "</td>";
+                                    echo "<td>" . $days[date('w', strtotime($appointment['scheduleDate']))] . "</td>";
                                     echo "<td>" . $appointment['scheduleDate'] . "</td>";
                                     echo "<td>" . $appointment['startTime'] . "</td>";
                                     echo "<td>" . $appointment['endTime'] . "</td>";
-                                    echo "<td><span class='glyphicon glyphicon-".$icon."' aria-hidden='true'></span>".' '."". $appointment['status'] . "</td>";
-                                    echo "<form method='POST'>";
+                                    echo "<td><span class='fa fa-".$icon."' aria-hidden='true'></span>".' '."". $appointment['status'] . "</td>";
                                     echo "<td class='text-center'><input type='checkbox' name='enable' id='enable' value='".$appointment['appId']."' onclick='chkit(".$appointment['appId'].",this.checked);' ".$checked."></td>";
-                                    echo "<td class='text-center'><a href='#' id='".$appointment['appId']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
+                                    echo "<td class='text-center'><a href='#' id='".$appointment['appId']."' class='delete'><span class='fa fa-trash-o' aria-hidden='true'></span></a>
                             </td>";
                                
                             } 

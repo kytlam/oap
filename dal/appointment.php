@@ -1,32 +1,64 @@
 <?php
 include_once dirname(dirname(__FILE__)).'/dal/dbconnect.php';
 
-function getappointmentScheduleList($role = null, $lgoinId = null) {
+function getappointmentScheduleList($role = null, $loginId = null, $appdate = null, $appid=0) {
     global $db_conn;
-    $condition = "";
-    if(!is_null($role) && !is_null($lgoinId)) {
+    $condition = [];
+    if(!is_null($role) && !is_null($loginId)) {
         if($role == "d") {
-            $condition = " WHERE dsc.icDoctor = '$lgoinId'";
+            array_push($condition," d.doctorId = '$loginId'");
         } elseif($role == "p") {
-            $condition = " WHERE pat.username = '$lgoinId'";
+            array_push($condition," pat.username = '$loginId'");
         } 
     }
+    if(!is_null($appdate)) {
+        array_push($condition," dsc.scheduleDate = '$appdate'");
+    }
+    if($appid > 0) {
+        array_push($condition," dsc.scheduleId = '$appid'");
+    }
+    $condition_str="";
+    if(count($condition) > 0) {
+        $condition_str=implode(" AND ", $condition);
+        $condition_str=" WHERE $condition_str";
+    }
     $query ="SELECT pat.*, app.*, dsc.*
-    FROM patient pat
-    JOIN appointment app
-    On pat.icPatient = app.icPatient
-    JOIN doctorschedule dsc
-    On app.scheduleId=dsc.scheduleId
-    {$condition}
-    Order By appId desc";
+        FROM patient pat
+        INNER JOIN appointment app
+        ON pat.icPatient = app.icPatient AND app.deletedAt IS NULL
+        INNER JOIN doctorschedule dsc
+        ON app.scheduleId=dsc.scheduleId AND dsc.deletedAt IS NULL
+        INNER JOIN doctor d 
+        ON dsc.icDoctor = d.icDoctor
+        {$condition_str}
+        ORDER BY appId DESC";
     $res=mysqli_query($db_conn,$query);
     if (!$res) {
         var_dump(mysqli_error($db_conn));die();
     }
-    $result=mysqli_fetch_array($res);
+    // $result=mysqli_fetch_array($res);
+    
+    $result = [];
+    while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
+        $result[]=$row;
+    }
     return $result;
 }
 
+function makeAppointment($post_data) {
+    global $db_conn;
+    $icPatient = mysqli_real_escape_string($db_conn, $post_data['icPatient']);
+    $scheduleid = mysqli_real_escape_string($db_conn,$post_data['scheduleid']);
+    $symptom = mysqli_real_escape_string($db_conn,$post_data['symptom']);
+    $comment = mysqli_real_escape_string($db_conn,$post_data['comment']);
+    $status = mysqli_real_escape_string($db_conn,$post_data['status']);
+
+    $query = "INSERT INTO appointment (icPatient, scheduleId, appSymptom, appComment, `status`)
+    VALUES ($icPatient,$scheduleid, '$symptom','$comment', '$status')";
+    $result = mysqli_query($db_conn, $query);
+    return $result;
+    
+}
 function updateAppointmentStatus($appId, $status) {
     global $db_conn;
     $query = "UPDATE appointment SET status='$status' WHERE appId=$appId";
