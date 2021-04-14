@@ -28,6 +28,7 @@ if (isset($_POST['login']))
 <?php
     }
 }
+$src='//'.WEB_HOST.'/'.DIR.'/';
 ?>
 
 <!DOCTYPE html>
@@ -38,15 +39,15 @@ if (isset($_POST['login']))
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Clinic Appointment Application</title>
         <!-- Bootstrap -->
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-        <link href="assets/css/style.css" rel="stylesheet">
+        <link href="<?= $src ?>assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<?= $src ?>assets/css/style.css" rel="stylesheet">
     </head>
     <body>
         <div class="container">
             <!-- start -->
             <div class="login-container">
                     <div id="output"></div>
-                    <div class="avatar"></div>
+                    <div class=""><img alt="Brand" src="<?= $src ?>assets/img/logo.png"></div>
                     <div class="form-box">
                         <form class="form" role="form" method="POST" accept-charset="UTF-8">
                             <input name="doctorId" type="text" placeholder="Doctor ID" required>
@@ -58,7 +59,7 @@ if (isset($_POST['login']))
             <!-- end -->
         </div>
 
-        <script src="assets/js/jquery.js"></script>
+        <script src="<?= $src ?>assets/js/jquery.js"></script>
 
         <!-- js start -->
         

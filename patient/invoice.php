@@ -1,25 +1,33 @@
 <?php
 session_start();
-include_once '../assets/conn/dbconnect.php';
+include_once dirname(dirname(__FILE__)).'/dal/patient.php';
+include_once dirname(dirname(__FILE__)).'/dal/schedule.php';
+include_once dirname(dirname(__FILE__)).'/dal/appointment.php';
 if (isset($_GET['appid'])) {
 $appid=$_GET['appid'];
 }
-$res=mysqli_query($con, "SELECT a.*, b.*,c.* FROM patient a
-JOIN appointment b
-On a.icPatient = b.icPatient
-JOIN doctorschedule c
-On b.scheduleId=c.scheduleId
-WHERE b.appId  =".$appid);
+if(!isset($_SESSION['patientSession']))
+{
+	header("Location: ../index.php");
+}
 
-$userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
+$src='//'.WEB_HOST.'/'.DIR.'/';
+$usersession = $_SESSION['patientSession'];
+$userRow=getPatient($usersession);
+if(($userRow==NULL)){
+    header("Location: ../index.php");
+}
+$src='//'.WEB_HOST.'/'.DIR.'/';
+$results=getappointmentScheduleList(null,null, null , 0, $appid);
+$result=$results[0];
 ?>
 <!doctype html>
 <html>
     <head>
         <meta charset="utf-8">
-        <title>A simple, clean, and responsive HTML invoice template</title>
-        
-        <link rel="stylesheet" type="text/css" href="assets/css/invoice.css">
+        <title>HTML invoice- Online Appointment Portal</title>
+        <meta name="robots" content="noindex">
+        <link rel="stylesheet" type="text/css" href="<?= $src ?>assets/css/invoice.css">
     </head>
     <body>
         <div class="invoice-box">
@@ -29,11 +37,11 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                         <table>
                             <tr>
                                 <td class="title">
-                                    <img src="assets/img/logo.png" style="width:100%; max-width:300px;">
+                                    <img src="<?= $src ?>assets/img/logo.png" style="width:100%; max-width:300px;">
                                 </td>
                                 
                                 <td>
-                                    Invoice #: <?php echo $userRow['appId'];?><br>
+                                    Invoice #: <?php echo $result['appId'];?><br>
                                     Created: <?php echo date("d-m-Y");?><br>
                                 </td>
                             </tr>
@@ -76,7 +84,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                     </td>
                     
                     <td>
-                       <?php echo $userRow['appId'];?>
+                       <?php echo $result['appId'];?>
                     </td>
                 </tr>
                 
@@ -86,7 +94,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                     </td>
                     
                     <td>
-                        <?php echo $userRow['scheduleId'];?>
+                        <?php echo $result['scheduleId'];?>
                     </td>
                 </tr>
 
@@ -96,7 +104,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                     </td>
                     
                     <td>
-                        <?php echo $userRow['scheduleDay'];?>
+                        <?php echo getScheduleDay($result['scheduleDate'])?>
                     </td>
                 </tr>
                 
@@ -107,7 +115,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                     </td>
                     
                     <td>
-                        <?php echo $userRow['scheduleDate'];?>
+                        <?php echo $result['scheduleDate'];?>
                     </td>
                 </tr>
 
@@ -117,7 +125,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                     </td>
                     
                     <td>
-                        <?php echo $userRow['startTime'];?> untill <?php echo $userRow['endTime'];?>
+                        <?php echo $result['startTime'];?> untill <?php echo $result['endTime'];?>
                     </td>
                 </tr>
 
@@ -127,7 +135,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                     </td>
                     
                     <td>
-                        <?php echo $userRow['appSymptom'];?> 
+                        <?php echo $result['appSymptom'];?> 
                     </td>
                 </tr>
                 

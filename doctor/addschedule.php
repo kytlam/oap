@@ -247,14 +247,13 @@ if (isset($_POST['submit'])) {
                             </thead>
                             
                             <?php 
-                            $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday','Thursday','Friday', 'Saturday');
                             $results = getScheduleList($userRow['icDoctor']);
                             foreach ($results as $doctorschedule) {
                                 echo "<tbody>";
                                 echo "<tr>";
                                     echo "<td>" . $doctorschedule['scheduleId'] . "</td>";
                                     echo "<td>" . $doctorschedule['scheduleDate'] . "</td>";
-                                    echo "<td>" . $days[date('w', strtotime($doctorschedule['scheduleDate']))] . "</td>";
+                                    echo "<td>" . getScheduleDay($doctorschedule['scheduleDate']) . "</td>";
                                     echo "<td>" . date("h:i", strtotime($doctorschedule['startTime'])) . "</td>";
                                     echo "<td>" . date("h:i", strtotime($doctorschedule['endTime'])) . "</td>";
                                     echo "<td>" . ($doctorschedule['isAvailable'] ? "YES" : "NO") . "</td>";

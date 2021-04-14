@@ -1,7 +1,7 @@
 <?php
 include_once dirname(dirname(__FILE__)).'/dal/dbconnect.php';
 
-function getappointmentScheduleList($role = null, $loginId = null, $appdate = null, $appid=0) {
+function getappointmentScheduleList($role = null, $loginId = null, $appdate = null, $schId=0, $appId=0) {
     global $db_conn;
     $condition = [];
     if(!is_null($role) && !is_null($loginId)) {
@@ -14,8 +14,11 @@ function getappointmentScheduleList($role = null, $loginId = null, $appdate = nu
     if(!is_null($appdate)) {
         array_push($condition," dsc.scheduleDate = '$appdate'");
     }
-    if($appid > 0) {
-        array_push($condition," dsc.scheduleId = '$appid'");
+    if($schId > 0) {
+        array_push($condition," dsc.scheduleId = '$schId'");
+    }
+    if($appId > 0) {
+        array_push($condition," app.appId = '$appId'");
     }
     $condition_str="";
     if(count($condition) > 0) {
@@ -32,11 +35,11 @@ function getappointmentScheduleList($role = null, $loginId = null, $appdate = nu
         ON dsc.icDoctor = d.icDoctor
         {$condition_str}
         ORDER BY appId DESC";
+        // var_dump($query);die();
     $res=mysqli_query($db_conn,$query);
     if (!$res) {
         var_dump(mysqli_error($db_conn));die();
     }
-    // $result=mysqli_fetch_array($res);
     
     $result = [];
     while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC)) {

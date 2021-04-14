@@ -106,5 +106,9 @@ function deleteSchedule($id) {
     }
 }
 
+function getScheduleDay($date) {
+    $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday','Thursday','Friday', 'Saturday');
+    return $days[date('w', strtotime($date))];
+}
 
 ?>

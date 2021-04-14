@@ -2,6 +2,7 @@
 session_start();
 include_once dirname(dirname(__FILE__)).'/dal/doctor.php';
 include_once dirname(dirname(__FILE__)).'/dal/appointment.php';
+include_once dirname(dirname(__FILE__)).'/dal/schedule.php';
 // include_once 'connection/server.php';
 if(!isset($_SESSION['doctorSession']))
 {
@@ -85,8 +86,7 @@ if(($userRow==NULL)){
                             
                             <?php 
                             $res_list = getappointmentScheduleList('d', $usersession);
-                            $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday','Thursday','Friday', 'Saturday');
-	                        foreach ($res_list as $appointment) {
+                            foreach ($res_list as $appointment) {
                                 if ($appointment['status']=='scheduled') {
                                     $status="danger";
                                     $icon='clock-o';
@@ -103,7 +103,7 @@ if(($userRow==NULL)){
                                     echo "<td>" . $appointment['patientLastName'] . "</td>";
                                     echo "<td>" . $appointment['patientPhone'] . "</td>";
                                     echo "<td>" . $appointment['patientEmail'] . "</td>";
-                                    echo "<td>" . $days[date('w', strtotime($appointment['scheduleDate']))] . "</td>";
+                                    echo "<td>" . getScheduleDay($appointment['scheduleDate']) . "</td>";
                                     echo "<td>" . $appointment['scheduleDate'] . "</td>";
                                     echo "<td>" . $appointment['startTime'] . "</td>";
                                     echo "<td>" . $appointment['endTime'] . "</td>";

@@ -128,6 +128,7 @@ CREATE TABLE `patient` (
   `patientDOB` date NOT NULL,
   `patientGender` ENUM('na', 'm', 'f'),
   `patientAddress` varchar(255) NOT NULL,
+  `patientMediRecordNo` varchar(255) NOT NULL,
   `patientPhone` varchar(15) NOT NULL,
   `patientEmail` varchar(255) NOT NULL,
   `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
