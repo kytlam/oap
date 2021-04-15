@@ -31,7 +31,7 @@ $appsch = getappointmentScheduleList('p', $usersession);
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 		<title>Appoinment List - Online Appointment Portal</title>
 		<link href="<?= $src ?>assets/css/style.css" rel="stylesheet">
-        <link rel="stylesheet" href="//formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
 
 	</head>
 	<body>
@@ -69,7 +69,7 @@ $appsch = getappointmentScheduleList('p', $usersession);
 									echo "<td>" . $value['scheduleDate'] . "</td>";
 									echo "<td>" . $value['startTime'] . "</td>";
 									echo "<td>" . $value['endTime'] . "</td>";
-									echo "<td><a href='invoice.php?appid=".$value['appId']."' target='_blank'><span class='glyphicon glyphicon-print' aria-hidden='true'></span></a> </td>";
+									echo "<td><a href='invoice.php?appid=".$value['appId']."' target='_blank'><span class='fa fa-print' aria-hidden='true'></span></a> </td>";
 									echo "</tr>";
 								} 
 							}else {

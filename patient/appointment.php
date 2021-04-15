@@ -22,26 +22,33 @@ if (isset($_POST['appointment'])) {
 	$post_data=$_POST;
 	unset($_POST);
 	$result = makeAppointment($post_data);
-if( $result )
-{
+	if( $result )
+	{
+		$ressult = markAsNotAvailable($post_data['scheduleid'], 0);
+		if( $result )
+		{
 ?>
-<script type="text/javascript">
-alert('Appointment made successfully.');
-</script>
+			<script type="text/javascript">
+			alert('Appointment made successfully.');
+			</script>
 <?php
-header("Location: patientapplist.php");
-}
-else
-{
-	echo mysqli_error($con);
+			header("Location: appointmentlist.php");
+		} else {
+			?>
+				<script type="text/javascript">
+				alert('Appointment booking fail. Please try again.');
+				</script>
+			<?php
+		}
+	}
+	else
+	{
 ?>
-<script type="text/javascript">
-alert('Appointment booking fail. Please try again.');
-</script>
+	<script type="text/javascript">
+	alert('Appointment booking fail. Please try again.');
+	</script>
 <?php
-// header("Location: patient/patient.php");
-}
-//dapat dari generator end
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -54,7 +61,7 @@ alert('Appointment booking fail. Please try again.');
 		<title>Make Appoinment - Online Appointment Portal</title>
 		<link href="<?= $src ?>assets/css/bootstrap.min.css" rel="stylesheet">
 		<link href="<?= $src ?>assets/css/style.css" rel="stylesheet">
-		<link rel="stylesheet" href="//formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
 
 	</head>
 	<body>
@@ -63,21 +70,15 @@ alert('Appointment booking fail. Please try again.');
 		<div class="container">
 			<section style="padding-bottom: 50px; padding-top: 50px;margin-top:64px">
 				<div class="row">
-					<!-- start -->
-					<!-- USER PROFILE ROW STARTS-->
 					<div class="row">
 						<div class="col-md-12 col-sm-12  user-wrapper" s>
 							<div class="description">
-								
-								
 								<div class="panel panel-default">
 									<div class="panel-body">
-										
-										
 										<form class="form" role="form" method="POST" accept-charset="UTF-8">
-										<input type="hidden" name="icPatient" value="<?= $userRow['icPatient'] ?>" />
-										<input type="hidden" name="scheduleid" value="<?= $schedule['scheduleId'] ?>" />
-										<input type="hidden" name="status" value="scheduled" />
+											<input type="hidden" name="icPatient" value="<?= $userRow['icPatient'] ?>" />
+											<input type="hidden" name="scheduleid" value="<?= $schedule['scheduleId'] ?>" />
+											<input type="hidden" name="status" value="scheduled" />
 											<div class="panel panel-default">
 												<div class="panel-heading">Patient Information</div>
 												<div class="panel-body">
@@ -113,13 +114,12 @@ alert('Appointment booking fail. Please try again.');
 										</form>
 									</div>
 								</div>
-								
 							</div>
-							
 						</div>
 					</div>
-					<!-- USER PROFILE ROW END-->
-					<!-- end -->
+				</div>
+				</section>
+				</div>
 					<script src="<?= $src ?>assets/js/jquery.js"></script>
 			<script src="<?= $src ?>assets/js/bootstrap.min.js"></script>
 		<?php include_once dirname(dirname(__FILE__)).'/shared/footer.php'; ?>

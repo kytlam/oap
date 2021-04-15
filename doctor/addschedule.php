@@ -12,6 +12,7 @@ $userRow=getDoctor($usersession);
 if(($userRow==NULL)){
     header("Location: ../index.php");
 }
+$src='//'.WEB_HOST.'/'.DIR.'/';
 $ACTION = 'Add';
 if(isset($_GET['schedule_update'])) {
     $update_id = $_GET['schedule_update'];
@@ -26,7 +27,6 @@ if (isset($_POST['submit'])) {
     $post_data = $_POST;
     unset($_POST);
     $result = updateOrCreate($post_data);
-    // echo $result;
     if( $result )
     {
 ?>
@@ -57,18 +57,11 @@ if (isset($_POST['submit'])) {
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Welcome Dr <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?></title>
-        <!-- Bootstrap Core CSS -->
-        <!-- <link href="assets/css/bootstrap.css" rel="stylesheet"> -->
         <link href="assets/css/material.css" rel="stylesheet">
-        <!-- Custom CSS -->
         <link href="assets/css/sb-admin.css" rel="stylesheet">
         <link href="assets/css/time/bootstrap-clockpicker.css" rel="stylesheet">
         <link href="assets/css/style.css" rel="stylesheet">
-        <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-        <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
         <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
-
-        <!--Font Awesome (added because you use icons in your prepend/append)-->
         <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
 
         <!-- Inline CSS based on choices in "Settings" tab -->
@@ -245,11 +238,10 @@ if (isset($_POST['submit'])) {
                                     <th>Edit / Delete</th>
                                 </tr>
                             </thead>
-                            
+                            <tbody>
                             <?php 
                             $results = getScheduleList($userRow['icDoctor']);
                             foreach ($results as $doctorschedule) {
-                                echo "<tbody>";
                                 echo "<tr>";
                                     echo "<td>" . $doctorschedule['scheduleId'] . "</td>";
                                     echo "<td>" . $doctorschedule['scheduleDate'] . "</td>";
@@ -264,41 +256,25 @@ if (isset($_POST['submit'])) {
                                         <a href='#' id='".$doctorschedule['scheduleId']."' class='delete remove_schedule'>
                                         <span class='fa fa-trash-o' aria-hidden='true'></span></a>
                                     </td>";
-                               
-                            } 
                                 echo "</tr>";
-                           echo "</tbody>";
-                       echo "</table>";
-                       echo "<div class='panel panel-default'>";
-                       echo "<div class='col-md-offset-3 pull-right'>";
-                        echo "</div>";
-                        echo "</div>";
-                        ?>
-                        <!-- panel content end -->
-                        <!-- panel end -->
+                            } 
+                            ?>
+                        </tbody>
+                       </table>
                         </div>
                     </div>
-                    <!-- panel start -->
                 </div>
             </div>
-        <!-- /#wrapper -->
-
-
-       
-        <!-- jQuery -->
-        <script src="../patient/assets/js/jquery.js"></script>
+        <script src="<?= $src ?>assets/js/jquery.js"></script>
         
-        <!-- Bootstrap Core JavaScript -->
-        <script src="../patient/assets/js/bootstrap.min.js"></script>
-        <script src="assets/js/bootstrap-clockpicker.js"></script>
-        <!-- Latest compiled and minified JavaScript -->
-         <!-- script for jquery datatable start-->
-        <!-- Include Date Range Picker -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+        <script src="<?= $src ?>assets/js/bootstrap.min.js"></script>
+        <script src="<?= $src ?>assets/js/bootstrap-clockpicker.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker.min.css"/>
 
 <script>
     $(document).ready(function(){
+    $('.clockpicker').clockpicker();
         var date_input=$('input[name="date"]'); //our date input has the name "date"
         var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
         date_input.datepicker({
@@ -306,14 +282,7 @@ if (isset($_POST['submit'])) {
             container: container,
             todayHighlight: true,
             autoclose: true,
-        })
-    })
-</script>
-<script type="text/javascript">
-    $('.clockpicker').clockpicker();
-</script>
-<script type="text/javascript">
-    $(function() {
+        });
         $(".remove_schedule").click(function(){
             var element = $(this);
             var id = element.attr("id");
@@ -336,14 +305,8 @@ if (isset($_POST['submit'])) {
             }
             return false;
         });
-    });
-</script>
-<script type="text/javascript">
-            /*
-            Please consider that the JS part isn't production ready at all, I just code it to show the concept of merging filters and titles together !
-            */
-            $(document).ready(function(){
-                $('.filterable .btn-filter').click(function(){
+        /* dummy filter */
+        $('.filterable .btn-filter').click(function(){
                     var $panel = $(this).parents('.filterable'),
                     $filters = $panel.find('.filters input'),
                     $tbody = $panel.find('.table tbody');
@@ -383,8 +346,8 @@ if (isset($_POST['submit'])) {
                         $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">No result found</td></tr>'));
                     }
                 });
-            });
-        </script>
+    })
+</script>
 
     </body>
 </html>

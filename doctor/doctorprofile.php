@@ -6,6 +6,7 @@ if(!isset($_SESSION['doctorSession']))
 header("Location: ../index.php");
 }
 $page="profile";
+$src='//'.WEB_HOST.'/'.DIR.'/';
 $usersession = $_SESSION['doctorSession'];
 $userRow=getDoctor($usersession);
 if(($userRow==NULL)){
@@ -29,16 +30,11 @@ if (isset($_POST['submit'])) {
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Welcome Dr <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?></title>
-        <!-- Bootstrap Core CSS -->
-        <!-- <link href="assets/css/bootstrap.css" rel="stylesheet"> -->
         <link href="assets/css/material.css" rel="stylesheet">
-        <!-- Custom CSS -->
         <link href="assets/css/sb-admin.css" rel="stylesheet">
         <link href="assets/css/time/bootstrap-clockpicker.css" rel="stylesheet">
         <link href="assets/css/style.css" rel="stylesheet">
         <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-        <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
-        <!-- Custom Fonts -->
     </head>
     <body>
         <div id="wrapper">
@@ -46,8 +42,6 @@ if (isset($_POST['submit'])) {
             <?php include_once 'navbar.php'; ?>
             <div id="page-wrapper">
                 <div class="container-fluid">
-                    
-                    <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
                             <h2 class="page-header">
@@ -60,24 +54,14 @@ if (isset($_POST['submit'])) {
                             </ol>
                         </div>
                     </div>
-                    <!-- Page Heading end-->
-
-                    <!-- panel start -->
                     <div class="panel panel-primary">
-
-                        <!-- panel heading starat -->
                         <div class="panel-heading">
                             <h3 class="panel-title">Doctor Details</h3>
                         </div>
-                        <!-- panel heading end -->
-
                         <div class="panel-body">
-                        <!-- panel content start -->
                           <div class="container">
             <section style="padding-bottom: 50px; padding-top: 50px;">
                 <div class="row">
-                    <!-- start -->
-                    <!-- USER PROFILE ROW STARTS-->
                     <div class="row">
                         <div class="col-md-3 col-sm-3">
                             
@@ -140,12 +124,7 @@ if (isset($_POST['submit'])) {
                             
                         </div>
                     </div>
-                    <!-- USER PROFILE ROW END-->
                     <div class="col-md-4">
-                        
-                        <!-- Large modal -->
-                        
-                        <!-- Modal -->
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -201,15 +180,9 @@ if (isset($_POST['submit'])) {
                                                             <input type="submit" name="submit" class="btn btn-info" value="Update Info"></td>
                                                         </tr>
                                                     </tbody>
-                                                    
                                                 </table>
-                                                
-                                                
-                                                
                                             </form>
-                                            <!-- form end -->
                                         </div>
-                                        
                                     </div>
                                 </div>
                             </div>
@@ -217,29 +190,15 @@ if (isset($_POST['submit'])) {
                         </div>
                         
                     </div>
-                        <!-- panel content end -->
-                        <!-- panel end -->
-                        </div>
                     </div>
-                    <!-- panel start -->
-
+                    </div>
                 </div>
             </div>
-        <!-- /#wrapper -->
-
-
-       
-        <!-- jQuery -->
-        <script src="../patient/assets/js/jquery.js"></script>
-        
-        <!-- Bootstrap Core JavaScript -->
-        <script src="../patient/assets/js/bootstrap.min.js"></script>
-        <script src="assets/js/bootstrap-clockpicker.js"></script>
-        <!-- Latest compiled and minified JavaScript -->
-         <!-- script for jquery datatable start-->
-        <!-- Include Date Range Picker -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+        <script src="<?= $src ?>assets/js/jquery.js"></script>
+        <script src="<?= $src ?>assets/js/bootstrap.min.js"></script>
+        <script src="<?= $src ?>assets/js/bootstrap-clockpicker.js"></script>
+        <link href="<?= $src ?>assets/css/date/bootstrap-datepicker.css" rel="stylesheet">
+        <script src="<?= $src ?>assets/js/date/bootstrap-datepicker.js"></script>
 
         <script>
             $(document).ready(function(){

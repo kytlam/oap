@@ -24,7 +24,7 @@ $src='//'.WEB_HOST.'/'.DIR.'/';
         <title>Patient Dashboard - Online Appointment Portal</title>
         <link href="<?= $src ?>assets/css/style.css" rel="stylesheet">
         <link href="<?= $src ?>assets/css/date/bootstrap-datepicker.css" rel="stylesheet">
-        <link rel="stylesheet" href="//formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
 		
 	</head>
 	<body>

@@ -1,6 +1,5 @@
-<!-- Navigation -->
+
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
         <span class="sr-only">Toggle navigation</span>
@@ -8,9 +7,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="doctordashboard.php">Welcome Dr <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?></a>
+        <a class="navbar-brand" href="dashboard.php">Welcome Dr <?php echo $userRow['doctorFirstName'];?> <?php echo $userRow['doctorLastName'];?></a>
     </div>
-    <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
         
         <li class="dropdown">
@@ -27,11 +25,10 @@
             </ul>
         </li>
     </ul>
-    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
             <li <?= $page==="dashboard" ? " class=\"active\"" : "" ?> >
-                <a href="doctordashboard.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                <a href="dashboard.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
             </li>
             <li <?= $page==="schedule" ? " class=\"active\"" : "" ?> >
                 <a href="addschedule.php"><i class="fa fa-fw fa-table"></i> Doctor Schedule</a>
@@ -41,6 +38,4 @@
             </li>
         </ul>
     </div>
-    <!-- /.navbar-collapse -->
 </nav>
-<!-- navigation end -->

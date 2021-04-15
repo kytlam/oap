@@ -48,7 +48,7 @@ if(!isset($_SESSION['patientSession'])) {
                 <ul class="nav navbar-nav">
                     <li><a href="patient.php">Home</a></li>
                     <!-- <li><a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>" >Profile</a></li> -->
-                    <li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>">Appointment</a></li>
+                    <li><a href="appointmentlist.php?patientId=<?php echo $userRow['icPatient']; ?>">Appointment</a></li>
                 </ul>
             </ul>
             
@@ -60,7 +60,7 @@ if(!isset($_SESSION['patientSession'])) {
                             <a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li>
-                            <a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>"><i class="glyphicon glyphicon-file"></i> Appointment</a>
+                            <a href="appointmentlist.php?patientId=<?php echo $userRow['icPatient']; ?>"><i class="fa fa-calendar"></i> Appointment</a>
                         </li>
                         <li class="divider"></li>
                         <li>

@@ -53,7 +53,19 @@ function getScheduleList($ic_doc) {
     }
     return $result;
 }
-    
+
+function markAsNotAvailable($schId, $bookavail) {
+    global $db_conn;
+    $query = " UPDATE doctorschedule SET
+            isAvailable = $bookavail
+        WHERE scheduleId = $schId ";
+        var_dump($query);
+    $result = mysqli_query($db_conn, $query);
+    if(!$result) {
+        var_dump(mysqli_error($db_conn));die();
+    }
+    return $result;
+}
 
 function updateOrCreate($post_data) {
     global $db_conn;
@@ -77,7 +89,7 @@ function updateOrCreate($post_data) {
             scheduleDate = '$date',
             startTime = '$starttime',
             endTime = '$endtime',
-            isAvailable = '$bookavail'
+            isAvailable = $bookavail
         WHERE scheduleId = $update_id AND icDoctor = $dID ";
     }
     $result = mysqli_query($db_conn, $query);

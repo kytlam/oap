@@ -2,7 +2,6 @@
 session_start();
 include_once dirname(dirname(__FILE__)).'/dal/doctor.php';
 include_once dirname(dirname(__FILE__)).'/dal/patient.php';
-// include_once 'connection/server.php';
 if(!isset($_SESSION['doctorSession']))
 {
     header("Location: ../index.php");
@@ -87,12 +86,11 @@ if(($userRow==NULL)){
                                     <th><!--Edit / -->Delete</th>
                                 </tr>
                             </thead>
-                            
+                            <tbody>
                             <?php 
                             $result=getPatientList();
                     
                             foreach($result as $patientRow) {
-                                echo "<tbody>";
                                 echo "<tr>";
                                     echo "<td>" . $patientRow['icPatient'] . "</td>";
                                     echo "<td>" . $patientRow['patientLastName'] . "</td>";
@@ -110,30 +108,17 @@ if(($userRow==NULL)){
                                         <a href='#' id='".$patientRow['icPatient']."' class='delete remove_schedule'>
                                         <span class='fa fa-trash-o' aria-hidden='true'></span></a>
                                     </td>";
-                               
-                            } 
                                 echo "</tr>";
-                           echo "</tbody>";
-                       echo "</table>";
-                       echo "<div class='panel panel-default'>";
-                       echo "<div class='col-md-offset-3 pull-right'>";
-                       echo "<button class='btn btn-primary' type='submit' value='Submit' name='submit'>Update</button>";
-                        echo "</div>";
-                        echo "</div>";
+                            } 
                         ?>
-                        <!-- panel content end -->
-                        <!-- panel end -->
+                       </tbody>
+                   </table>
+                   <div class='panel panel-default'>
+                    </div>
                         </div>
                     </div>
-                    <!-- panel start -->
-
                 </div>
             </div>
-        <!-- /#wrapper -->
-
-
-       
-        <!-- jQuery -->
         <script src="../patient/assets/js/jquery.js"></script>
         <script type="text/javascript">
 $(function() {

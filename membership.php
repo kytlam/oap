@@ -72,7 +72,7 @@ if (isset($_POST['signup'])) {
         <link href="<?= $src ?>assets/css/date/bootstrap-datepicker.css" rel="stylesheet">
 
         <!--Font Awesome (added because you use icons in your prepend/append)-->
-        <link rel="stylesheet" href="//formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
     </head>
     <body>
         <?php include_once 'shared/navbar.php'; ?>

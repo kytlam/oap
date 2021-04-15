@@ -3,7 +3,7 @@ include_once 'dal/doctor.php';
 
 session_start();
 if (isset($_SESSION['doctorSession']) != "") {
-    header("Location: doctor/doctordashboard.php");
+    header("Location: doctor/dashboard.php");
 }
 
 if (isset($_POST['login']))
@@ -19,7 +19,7 @@ if (isset($_POST['login']))
             alert('Login Success');
         </script>
 <?php
-        header("Location: doctor/doctordashboard.php");
+        header("Location: doctor/dashboard.php");
     } else {
 ?>
         <script type="text/javascript">

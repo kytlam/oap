@@ -8,6 +8,7 @@ if(!isset($_SESSION['doctorSession']))
 {
     header("Location: ../index.php");
 }
+$src='//'.WEB_HOST.'/'.DIR.'/';
 $page="dashboard";
 $usersession = $_SESSION['doctorSession'];
 $userRow=getDoctor($usersession);
@@ -83,7 +84,7 @@ if(($userRow==NULL)){
                                     <th><input type="text" class="form-control" placeholder="Delete" disabled></th>
                                 </tr>
                             </thead>
-                            
+                            <tbody>
                             <?php 
                             $res_list = getappointmentScheduleList('d', $usersession);
                             foreach ($res_list as $appointment) {
@@ -97,7 +98,6 @@ if(($userRow==NULL)){
                                     $icon='check';
                                     $checked = 'disabled checked="checked"';
                                 }
-                                echo "<tbody>";
                                 echo "<tr class='$status'>";
                                     echo "<td>" . $appointment['icPatient'] . "</td>";
                                     echo "<td>" . $appointment['patientLastName'] . "</td>";
@@ -110,49 +110,52 @@ if(($userRow==NULL)){
                                     echo "<td><span class='fa fa-".$icon."' aria-hidden='true'></span>".' '."". $appointment['status'] . "</td>";
                                     echo "<td class='text-center'><input type='checkbox' name='enable' id='enable' value='".$appointment['appId']."' onclick='chkit(".$appointment['appId'].",this.checked);' ".$checked."></td>";
                                     echo "<td class='text-center'><a href='#' id='".$appointment['appId']."' class='delete'><span class='fa fa-trash-o' aria-hidden='true'></span></a>
-                            </td>";
-                               
+                                    </td>";
+                                    echo "</tr>";
                             } 
-                                echo "</tr>";
-                           echo "</tbody>";
-                       echo "</table>";
-                       echo "<div class='panel panel-default'>";
-                       echo "<div class='col-md-offset-3 pull-right'>";
-                       echo "<button class='btn btn-primary' type='submit' value='Submit' name='submit'>Update</button>";
-                        echo "</div>";
-                        echo "</div>";
-                        ?>
+                                ?>
+                                </tbody>
+                            </table>
+                            <div class='panel panel-default'>
+                        </div>
                     </div>
                 </div>
                     <!-- panel end -->
 <script type="text/javascript">
 function chkit(aid, chk) {
-   chk = (chk==true ? "1" : "0");
-   var url = "checkdb.php?appid="+aid+"&ischecked="+chk;
-   if(window.XMLHttpRequest) {
-      req = new XMLHttpRequest();
-   } else if(window.ActiveXObject) {
-      req = new ActiveXObject("Microsoft.XMLHTTP");
-   }
-   // Use get instead of post.
-   req.open("GET", url, true);
-   req.send(null);
+    if (confirm("Are you confirm this schedule is completed? ")) {
+        var chk = (chk==true ? "1" : "0");
+        $.ajax({
+            type: "POST",
+            url: "markdone.php",
+            data: {
+                appid: aid,
+                ischecked: chk
+            },
+            success: function(result){
+                if(result.trim() == "1") {
+                    alert('Schedule is marked as completed.');
+                    location.href = 'dashboard.php';
+                } else {
+                    alert('Unable to marke the schedule as completed.');
+                }
+            }
+        });
+    }
+
 }
 </script>
 
 
  
                 </div>
-                <!-- /.container-fluid -->
             </div>
-            <!-- /#page-wrapper -->
         </div>
-        <!-- /#wrapper -->
 
 
        
         <!-- jQuery -->
-        <script src="../patient/assets/js/jquery.js"></script>
+        <script src="<?= $src ?>assets/js/jquery.js"></script>
         <script type="text/javascript">
 $(function() {
 $(".delete").click(function(){
@@ -175,7 +178,7 @@ return false;
 });
 </script>
         <!-- Bootstrap Core JavaScript -->
-        <script src="../patient/assets/js/bootstrap.min.js"></script>
+        <script src="<?= $src ?>assets/js/bootstrap.min.js"></script>
         <!-- Latest compiled and minified JavaScript -->
          <!-- script for jquery datatable start-->
         <script type="text/javascript">

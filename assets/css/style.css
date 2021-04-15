@@ -1404,6 +1404,7 @@ p .btn
 {
     background: #1abc9c;
     box-shadow: 0 2px #16a085;
+    margin: 0;
 }
 
 .btn.btn-primary:hover

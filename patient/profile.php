@@ -67,8 +67,8 @@ $src='//'.WEB_HOST.'/'.DIR.'/';
 		<link href="<?= $src ?>assets/css/bootstrap.min.css" rel="stylesheet">
 		<link href="<?= $src ?>assets/css/style.css" rel="stylesheet">
 		<link href="<?= $src ?>assets/css/date/bootstrap-datepicker.css" rel="stylesheet">
-		<link rel="stylesheet" href="//formden.com/static/cdn/bootstrap-iso.css" />
-		<link rel="stylesheet" href="//formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+		<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
 	</head>
 	<body>
 		<?php include_once dirname(dirname(__FILE__)).'/shared/navbar.php'; ?>
