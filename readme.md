@@ -1,7 +1,12 @@
-This project is only for school demo purpose.
+Installation Steps:
+1) Download XAMPP and install Apache + MySQLDB + PHP + Perl
+2) Move the oap into {install_path}\xampp\htdocs
+3) Turn on Apache and MySQL DB
+4) Use phpMyAdmin to import the DB schema
+5) rename the 'env.php.sample' to 'env.php' and update db settings for db access
+6) goto http://127.0.0.1/oap/index.php for patient role
+6) goto http://127.0.0.1/oap/adminlogin.php for doctor role
 
-It is modified based on the free proejct from:
-
-https://projectworlds.in/free-projects/php-projects/online-doctor-appointment-booking-system-php-and-mysql/
-
-For more detail of the free proejct, please goto the link above.
+Account:
+doctor: admin / admin
+patient: patient / 123
