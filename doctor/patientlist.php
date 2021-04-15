@@ -48,11 +48,6 @@ if(($userRow==NULL)){
                             <h2 class="page-header">
                             Patient List
                             </h2>
-                            <ol class="breadcrumb">
-                                <li class="active">
-                                    <i class="fa fa-calendar"></i> Patient List
-                                </li>
-                            </ol>
                         </div>
                     </div>
                     <!-- Page Heading end-->

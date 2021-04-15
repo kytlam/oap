@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
     $post_data = $_POST;
     unset($_POST);
     $result = updateDoctors($post_data);
-    header( 'Location: doctorprofile.php' ) ;
+    header( 'Location: profile.php' ) ;
 
 }
 ?>
@@ -45,13 +45,8 @@ if (isset($_POST['submit'])) {
                     <div class="row">
                         <div class="col-lg-12">
                             <h2 class="page-header">
-                            Doctor Profile
+                                Doctor Profile
                             </h2>
-                            <ol class="breadcrumb">
-                                <li class="active">
-                                    <i class="fa fa-calendar"></i> Doctor Profile
-                                </li>
-                            </ol>
                         </div>
                     </div>
                     <div class="panel panel-primary">
@@ -60,22 +55,9 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="panel-body">
                           <div class="container">
-            <section style="padding-bottom: 50px; padding-top: 50px;">
+            <section>
                 <div class="row">
                     <div class="row">
-                        <div class="col-md-3 col-sm-3">
-                            
-                            <div class="user-wrapper">
-                                <img src="assets/img/1.jpg" class="img-responsive" />
-                                <div class="description">
-                                    <h4><?php echo $userRow['doctorFirstName']; ?> <?php echo $userRow['doctorLastName']; ?></h4>
-                                    <h5> <strong> Doctor </strong></h5>
-                                    
-                                    <hr />
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Update Profile</button>
-                                </div>
-                            </div>
-                        </div>
                         
                         <div class="col-md-9 col-sm-9  user-wrapper">
                             <div class="description">
@@ -120,6 +102,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 </div>
                                 
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Update Profile</button>
                             </div>
                             
                         </div>

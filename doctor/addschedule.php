@@ -81,11 +81,6 @@ if (isset($_POST['submit'])) {
                             <h2 class="page-header">
                             Doctor Schedule
                             </h2>
-                            <ol class="breadcrumb">
-                                <li class="active">
-                                    <i class="fa fa-calendar"></i> Schedule
-                                </li>
-                            </ol>
                         </div>
                     </div>
                     <!-- Page Heading end-->

@@ -48,11 +48,6 @@ if(($userRow==NULL)){
                             <h2 class="page-header">
                             Dashboard
                             </h2>
-                            <ol class="breadcrumb">
-                                <li class="active">
-                                    <i class="fa fa-file"></i> Blank Page
-                                </li>
-                            </ol>
                         </div>
                     </div>
                     <!-- Page Heading end-->
