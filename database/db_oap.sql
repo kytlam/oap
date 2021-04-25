@@ -6,7 +6,7 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 --
--- Database: `db_healthcare`
+-- Database: `db_oap`
 --
 
 -- --------------------------------------------------------
@@ -15,7 +15,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `appointment`
 --
 
-CREATE TABLE `appointment` (
+CREATE TABLE IF NOT EXISTS `appointment` (
   `appId` bigint NOT NULL AUTO_INCREMENT,
   `icPatient` bigint NOT NULL,
   `scheduleId` bigint NOT NULL,
@@ -24,6 +24,7 @@ CREATE TABLE `appointment` (
   `status` ENUM('scheduled', 'done'),
   `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deletedAt` TIMESTAMP NULL,
   PRIMARY KEY (`appId`),
   INDEX (`icPatient`),
   INDEX (`scheduleId`)
@@ -42,7 +43,7 @@ CREATE TABLE `appointment` (
 -- Table structure for table `doctor`
 --
 
-CREATE TABLE `doctor` (
+CREATE TABLE IF NOT EXISTS `doctor` (
   `icDoctor` bigint NOT NULL AUTO_INCREMENT,
   `doctorId` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -63,7 +64,7 @@ CREATE TABLE `doctor` (
 --
 -- Dumping data for table `doctor`
 --
---password = admin
+-- password = admin
 INSERT INTO `doctor` (`doctorId`, `password`,  `doctorFirstName`, `doctorLastName`, `doctorAddress`, `doctorPhone`, `doctorEmail`, `doctorDOB`, `isAdmin`) VALUES
 ('admin', '88bc91a49e1fc62b3b55bf1188aa45f5ea9ef008c8e7d61a73b6dc33af87473c', 'John', 'Smith', 'Hong Kong', '22222222', 'js@example.com', '1990-04-1', 1);
 
@@ -73,7 +74,7 @@ INSERT INTO `doctor` (`doctorId`, `password`,  `doctorFirstName`, `doctorLastNam
 -- Table structure for table `doctorschedule`
 --
 
-CREATE TABLE `doctorschedule` (
+CREATE TABLE IF NOT EXISTS `doctorschedule` (
   `scheduleId` bigint NOT NULL AUTO_INCREMENT,
   `scheduleDate` date NOT NULL,
   -- `scheduleDay` varchar(15) NOT NULL,
@@ -84,6 +85,7 @@ CREATE TABLE `doctorschedule` (
   `icDoctor` bigint NOT NULL,
   `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deletedAt` TIMESTAMP NULL,
   PRIMARY KEY (`scheduleId`),
   INDEX(`icDoctor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -105,7 +107,7 @@ INSERT INTO `doctorschedule` (`scheduleDate`, `startTime`, `endTime`, `isAvailab
 -- Table structure for table `patient`
 --
 
-CREATE TABLE `patient` (
+CREATE TABLE IF NOT EXISTS `patient` (
   `icPatient` bigint NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -128,35 +130,6 @@ CREATE TABLE `patient` (
 --
 -- Dumping data for table `patient`
 --
---password = 123
+-- password = 123
 INSERT INTO `patient` (`username`, `password`, `patientFirstName`, `patientLastName`, `patientMaritialStatus`, `patientDOB`, `patientGender`, `patientAddress`, `patientPhone`, `patientEmail`) VALUES
 ('patient', '5902425b65a439680eaf3fe527e9228573ab9660db1ff596c8f502d30cc0d780', 'Mohd', 'Mazlan', 'single', '1992-05-17', 'm', 'NO 153 BLOK MURNI\r\nKOLEJ CANSELOR UNIVERSITI PUTRA MALAYSIA', '173567758', 'lan.psis@gmail.com');
-
-
-
---
--- Constraints for table `doctorschedule`
---
-ALTER TABLE `doctorschedule` 
-ADD CONSTRAINT `doc_sch`
-  FOREIGN KEY (`icDoctor`)
-  REFERENCES `doctor` (`icDoctor`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-
---
--- Constraints for table `appointment`
---
-ALTER TABLE `db_oap`.`appointment` 
-ADD CONSTRAINT `app_patient`
-  FOREIGN KEY (`icPatient`)
-  REFERENCES `db_oap`.`patient` (`icPatient`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE,
-  FOREIGN KEY (`scheduleId`)
-  REFERENCES `db_oap`.`doctorschedule` (`scheduleId`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-COMMIT;
