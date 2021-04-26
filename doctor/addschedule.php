@@ -25,8 +25,46 @@ if(isset($_GET['schedule_update'])) {
 // insert
 if (isset($_POST['submit'])) {
     $post_data = $_POST;
+
+    $error = 0;
+    if($post_data['starttime'] >= $post_data['endtime']){
+        $error = 1;
+    }
+
+    $checkDupli = getScheduleByDateTime($post_data['date'], $post_data['starttime'], $post_data['endtime']);
+    if($checkDupli != NULL){
+        $error = 2;
+    }
+
     unset($_POST);
-    $result = updateOrCreate($post_data);
+    if($error == 0){
+        $result = updateOrCreate($post_data);
+    }else{
+
+        if($error == 1){
+
+?>
+
+    <script type="text/javascript">
+    alert('start time can not late than end time');
+    window.location.replace("addschedule.php");
+    </script>   
+
+<?php
+    }else if ($error == 2){
+
+?>
+
+    <script type="text/javascript">
+    alert('duplicate schedule date!!');
+    window.location.replace("addschedule.php");
+    </script>  
+
+<?php
+
+    }
+}
+
     if( $result )
     {
 ?>
@@ -241,8 +279,8 @@ if (isset($_POST['submit'])) {
                                     echo "<td>" . $doctorschedule['scheduleId'] . "</td>";
                                     echo "<td>" . $doctorschedule['scheduleDate'] . "</td>";
                                     echo "<td>" . getScheduleDay($doctorschedule['scheduleDate']) . "</td>";
-                                    echo "<td>" . date("h:i", strtotime($doctorschedule['startTime'])) . "</td>";
-                                    echo "<td>" . date("h:i", strtotime($doctorschedule['endTime'])) . "</td>";
+                                    echo "<td>" . date("H:i", strtotime($doctorschedule['startTime'])) . "</td>";
+                                    echo "<td>" . date("H:i", strtotime($doctorschedule['endTime'])) . "</td>";
                                     echo "<td>" . ($doctorschedule['isAvailable'] ? "YES" : "NO") . "</td>";
                                     echo "<td class='text-center'>
                                         <a href='addschedule.php?schedule_update=$doctorschedule[scheduleId]' class='update_schedule'>
@@ -286,6 +324,7 @@ if (isset($_POST['submit'])) {
             {
                 $.ajax({
                 type: "POST",
+                dataType: "json",
                 url: "deleteschedule.php",
                 data: info,
                 success: function($result){

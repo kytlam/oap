@@ -8,6 +8,53 @@ if (isset($_SESSION['patientSession']) != "") {
     header("Location: patient/patient.php");
 }
 $src='//'.WEB_HOST.'/'.DIR.'/';
+if (isset($_POST['login']))
+{
+    $post_data = $_POST;
+    unset($_POST);
+    $result=patientLogin($post_data);
+
+    if ($result["success"])
+    {
+        $_SESSION['patientSession'] = $result['username'];
+?>
+    <script type="text/javascript">
+        alert('Login Success');
+    </script>
+    <?php
+        header("Location: patient/patient.php");
+    } else {
+    ?>
+    <script>
+        alert('wrong input ');
+    </script>
+<?php
+    }
+}
+?>
+<!-- register -->
+<?php
+if (isset($_POST['signup'])) {
+    $post_data = $_POST;
+    unset($_POST);
+
+    $result = register($post_data) ;
+    if( $result == "done" )
+    {
+?>
+    <script type="text/javascript">
+        alert('Register success. Please Login to make an appointment.');
+    </script>
+<?php
+    } else {
+?>
+    <script type="text/javascript">
+        alert('<?= $result ?>');
+    </script>
+<?php
+    }
+
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,9 +100,18 @@ $src='//'.WEB_HOST.'/'.DIR.'/';
     <script src="<?= $src ?>assets/js/collapse.js"></script>
     <script>
         $(document).ready(function(){
+            $('#regModal').on('shown.bs.modal', function () {
+                $('#fname').focus()
+            })
             var date_input=$('input[name="date"]'); //our date input has the name "date"
             var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
             date_input.datepicker({
+                format: 'yyyy-mm-dd',
+                container: container,
+                todayHighlight: true,
+                autoclose: true,
+            });
+            $('input[name="regDOB"]').datepicker({
                 format: 'yyyy-mm-dd',
                 container: container,
                 todayHighlight: true,

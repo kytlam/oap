@@ -1,6 +1,19 @@
 <?php
 include_once dirname(dirname(__FILE__)).'/dal/dbconnect.php';
 
+function getScheduleByDateTime($date, $startTime, $endTime){
+
+    global $db_conn;
+
+    $query = "SELECT * FROM doctorschedule WHERE scheduleDate='$date' AND startTime='$startTime' and endTime='$endTime' and deletedAt IS NULL";
+    $res=mysqli_query($db_conn,  $query);
+    if($res === false) {
+        return NULL;
+    }
+    $result=mysqli_fetch_array($res,MYSQLI_ASSOC);
+    return $result;
+}
+
 function getSchedule($scheduleId, $date = null, $isAval=null) {
     global $db_conn;
 

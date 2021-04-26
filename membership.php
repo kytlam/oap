@@ -78,7 +78,7 @@ if (isset($_POST['signup'])) {
         <?php include_once 'shared/navbar.php'; ?>
         <div style="margin-top:64px;    min-height: 1200px;">
         <div id="loginForm">
-            <h3>Sign Up</h3>
+            <h3>Sign In</h3>
             <form class="form" role="form" method="POST" accept-charset="UTF-8" >
                 <div class="form-group">
                     <label class="sr-only" for="username">Username</label>
@@ -97,7 +97,8 @@ if (isset($_POST['signup'])) {
             <h3>Sign Up</h3>
             <form action="<?php $_PHP_SELF ?>" method="POST" accept-charset="utf-8" class="form" role="form">
                 <input type="text" name="username" maxlength="50" value="<?= GetOldData($oldData, 'username') ?>" class="form-control input-lg" placeholder="Login Username"  required/>
-                <input type="password" name="password" value="" maxlength="50" class="form-control input-lg" placeholder="Password"  required/>
+                <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" value="" maxlength="50" class="form-control input-lg" placeholder="Password"  required/>
+                <span class="help-block">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</span>
                 <input type="password" name="confirm_password" maxlength="50" value="" class="form-control input-lg" placeholder="Confirm Password"  required/>
                 <input type="text" name="patientMediRecordNo" maxlength=50 value="<?= GetOldData($oldData, 'patientMediRecordNo') ?>" class="form-control input-lg" placeholder="[If any] Number in your medical record or card" /> 
                 <div class="row">
@@ -128,11 +129,12 @@ if (isset($_POST['signup'])) {
                 </div>
                 <label>Address : </label>
                 <div> <textarea name="patientAddress" rows="4" cols="50" style="border: 1px solid #eee;"><?= GetOldData($oldData, 'patientAddress') ?></textarea></div>
-                <input type="tel" name="patientPhone" maxlength="50" value="<?= GetOldData($oldData, 'patientPhone') ?>" class="form-control input-lg" placeholder="Phone Number"  required/>
+                <input type="tel" name="patientPhone" minlength="8" maxlength="8" value="<?= GetOldData($oldData, 'patientPhone') ?>" class="form-control input-lg" placeholder="Phone Number"  required/>
                 <br />
                 <span class="help-block">After Created my account, you agree to our T&C as well as our Data Use Policy, including Cookie Use.</span>
                 
                 <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit" name="signup" id="signup">Create my account</button>
+                <span class="help-block">Must 8 number</span>
             </form>
         </div></div>
         <?php include_once 'shared/footer.php'; ?>
