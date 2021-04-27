@@ -3,7 +3,7 @@
 <?php
 include_once 'dal/patient.php';
 session_start();
-if (isset($_SESSION['patientSession']) != "") {
+if (isset($_SESSION['patientSession'])) {
     header("Location: patient/patient.php");
 }
 $src='//'.WEB_HOST.'/'.DIR.'/';
