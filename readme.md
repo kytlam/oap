@@ -5,7 +5,7 @@ Installation Steps:
 4) Use phpMyAdmin to import the DB schema
 5) rename the 'env.php.sample' to 'env.php' and update db settings for db access
 6) goto http://127.0.0.1/oap/index.php for patient role
-6) goto http://127.0.0.1/oap/adminlogin.php for doctor role
+7) goto http://127.0.0.1/oap/adminlogin.php for doctor role
 
 Account:
 doctor: admin / admin

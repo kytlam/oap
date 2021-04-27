@@ -1,5 +1,6 @@
 
-
+create database db_oap;
+use db_oap;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -8,7 +9,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_oap`
 --
-
 -- --------------------------------------------------------
 
 --
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `patient` (
   `patientDOB` date NOT NULL,
   `patientGender` ENUM('na', 'm', 'f'),
   `patientAddress` varchar(255) NOT NULL,
-  `patientMediRecordNo` varchar(255) NOT NULL,
+  `patientMediRecordNo` varchar(255) NULL,
   `patientPhone` varchar(15) NOT NULL,
   `patientEmail` varchar(255) NOT NULL,
   `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -132,4 +132,31 @@ CREATE TABLE IF NOT EXISTS `patient` (
 --
 -- password = 123
 INSERT INTO `patient` (`username`, `password`, `patientFirstName`, `patientLastName`, `patientMaritialStatus`, `patientDOB`, `patientGender`, `patientAddress`, `patientPhone`, `patientEmail`) VALUES
-('patient', '5902425b65a439680eaf3fe527e9228573ab9660db1ff596c8f502d30cc0d780', 'Mohd', 'Mazlan', 'single', '1992-05-17', 'm', 'NO 153 BLOK MURNI\r\nKOLEJ CANSELOR UNIVERSITI PUTRA MALAYSIA', '173567758', 'lan.psis@gmail.com');
+('patient', '5902425b65a439680eaf3fe527e9228573ab9660db1ff596c8f502d30cc0d780', 'MoMo', 'Ma', 'single', '1992-05-17', 'm', 'MALAYSIA', '73567758', 'ma.momo@gmail.com');
+--
+-- Constraints for table `doctorschedule`
+--
+ALTER TABLE `doctorschedule` 
+ADD CONSTRAINT `doc_sch`
+  FOREIGN KEY (`icDoctor`)
+  REFERENCES `doctor` (`icDoctor`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+--
+-- Constraints for table `appointment`
+--
+ALTER TABLE `db_oap`.`appointment` 
+ADD CONSTRAINT `app_patient`
+  FOREIGN KEY (`icPatient`)
+  REFERENCES `db_oap`.`patient` (`icPatient`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+  
+ALTER TABLE `db_oap`.`appointment` 
+ADD CONSTRAINT `app_sch`
+  FOREIGN KEY (`scheduleId`)
+  REFERENCES `db_oap`.`doctorschedule` (`scheduleId`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
