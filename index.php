@@ -3,7 +3,6 @@
 <?php
 include_once 'dal/patient.php';
 session_start();
-// session_destroy();
 if (isset($_SESSION['patientSession']) != "") {
     header("Location: patient/patient.php");
 }
