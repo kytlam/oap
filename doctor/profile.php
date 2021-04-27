@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
         <link href="assets/css/sb-admin.css" rel="stylesheet">
         <link href="assets/css/time/bootstrap-clockpicker.css" rel="stylesheet">
         <link href="assets/css/style.css" rel="stylesheet">
-        <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     </head>
     <body>
         <div id="wrapper">

@@ -2,7 +2,7 @@
 include_once 'dal/doctor.php';
 
 session_start();
-if (isset($_SESSION['doctorSession']) != "") {
+if (isset($_SESSION['doctorSession'])) {
     header("Location: doctor/dashboard.php");
 }
 

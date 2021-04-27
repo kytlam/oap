@@ -8,29 +8,7 @@ if (isset($_SESSION['patientSession']) != "") {
     header("Location: patient/patient.php");
 }
 $src='//'.WEB_HOST.'/'.DIR.'/';
-if (isset($_POST['login']))
-{
-    $post_data = $_POST;
-    unset($_POST);
-    $result=patientLogin($post_data);
 
-    if ($result["success"])
-    {
-        $_SESSION['patientSession'] = $result['username'];
-?>
-    <script type="text/javascript">
-        alert('Login Success');
-    </script>
-    <?php
-        header("Location: patient/patient.php");
-    } else {
-    ?>
-    <script>
-        alert('wrong input ');
-    </script>
-<?php
-    }
-}
 ?>
 <!-- register -->
 <?php
