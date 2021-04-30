@@ -8,5 +8,5 @@ Installation Steps:
 7) goto http://127.0.0.1/oap/adminlogin.php for doctor role
 
 Account:
-doctor: admin / admin
-patient: patient / 123
+doctor: admin / Admin1234
+patient: patient / Abcd1234

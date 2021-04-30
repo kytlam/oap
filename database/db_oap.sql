@@ -64,9 +64,9 @@ CREATE TABLE IF NOT EXISTS `doctor` (
 --
 -- Dumping data for table `doctor`
 --
--- password = admin
+-- password = Admin1234
 INSERT INTO `doctor` (`doctorId`, `password`,  `doctorFirstName`, `doctorLastName`, `doctorAddress`, `doctorPhone`, `doctorEmail`, `doctorDOB`, `isAdmin`) VALUES
-('admin', '88bc91a49e1fc62b3b55bf1188aa45f5ea9ef008c8e7d61a73b6dc33af87473c', 'John', 'Smith', 'Hong Kong', '22222222', 'js@example.com', '1990-04-1', 1);
+('admin', 'bd0bbd72d5e4e35b4b8676e56c22b172ddbe87e2faf76da6394bc73c08087b15', 'John', 'Smith', 'Hong Kong', '22222222', 'js@example.com', '1990-04-1', 1);
 
 -- --------------------------------------------------------
 
@@ -130,9 +130,9 @@ CREATE TABLE IF NOT EXISTS `patient` (
 --
 -- Dumping data for table `patient`
 --
--- password = 123
+-- password = Abcd1234
 INSERT INTO `patient` (`username`, `password`, `patientFirstName`, `patientLastName`, `patientMaritialStatus`, `patientDOB`, `patientGender`, `patientAddress`, `patientPhone`, `patientEmail`) VALUES
-('patient', '5902425b65a439680eaf3fe527e9228573ab9660db1ff596c8f502d30cc0d780', 'MoMo', 'Ma', 'single', '1992-05-17', 'm', 'MALAYSIA', '73567758', 'ma.momo@gmail.com');
+('patient', '95d63cf40aeca261c90b6be19cd3386406f0faceb7892a90b30b1b8acca99506', 'MoMo', 'Ma', 'single', '1992-05-17', 'm', 'MALAYSIA', '73567758', 'ma.momo@gmail.com');
 --
 -- Constraints for table `doctorschedule`
 --
