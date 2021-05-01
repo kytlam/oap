@@ -1,3 +1,4 @@
+Comp5241 Group Project Group 19
 Installation Steps:
 1) Download XAMPP and install Apache + MySQLDB + PHP + Perl
 2) Move the oap into {install_path}\xampp\htdocs
