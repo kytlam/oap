@@ -5,7 +5,7 @@ function getScheduleByDateTime($date, $startTime, $endTime){
 
     global $db_conn;
 
-    $query = "SELECT * FROM doctorschedule WHERE scheduleDate='$date' AND startTime='$startTime' and endTime='$endTime' and deletedAt IS NULL";
+    $query = "SELECT * FROM doctorschedule WHERE scheduleDate='$date' AND (startTime between '$startTime' and '$endTime' or endTime between '$startTime' and '$endTime') and deletedAt IS NULL";
     $res=mysqli_query($db_conn,  $query);
     if($res === false) {
         return NULL;

@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 ?>
 
     <script type="text/javascript">
-    alert('duplicate schedule date!!');
+    alert('schedule date is unavailable!!');
     window.location.replace("addschedule.php");
     </script>  
 
